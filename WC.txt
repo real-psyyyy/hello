@@ -1,0 +1,119 @@
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include <ctype.h>
+#include <io.h>
+
+void open_file(int a,int b,int c);
+char str1[50];
+char sym[100]={',','.','/','!','(',')','{','}',':','+','-','*','='};
+
+int main ()
+{
+    char s[100];
+    gets(s);
+
+    while(1)
+    {
+        int s_ch=0,s_word=0,s_line=0;//记录输入的查询数据
+        int length_s=0;
+        length_s=strlen(s);
+        
+        int i=0;
+        
+        for(i=7;i<length_s;++i)
+        {
+            if((s[i]=='-')&&(s[i+1]=='c'))
+            {
+                s_ch=1;
+            }
+            if((s[i]=='-')&&(s[i+1]=='w'))
+            {
+                s_word=2;
+            }
+            if((s[i]=='-')&&(s[i+1]=='l'))
+            {
+                s_line=3;
+            }
+            if(s[i]=='F')
+            {
+                strncpy(str1,s+i,length_s-i);
+                break;
+            }//获取文件名
+        }
+        open_file(s_ch,s_word,s_line);
+        printf("\n");
+        
+        gets(s);
+    }
+    
+    return 0;
+}
+
+void open_file(int a,int b,int c)
+{
+    FILE *fp;
+    fp=fopen(str1,"r");
+    if(fp==NULL)
+    {
+        printf("the file not found\n");
+        exit(0);
+    }//打开地址文件
+    
+    int word_N=0,line_N=0,ch_N=0;//记录单词数、行数、字符数
+    char ch;
+    while((ch=fgetc(fp))!=EOF)
+    {
+        ch_N++;
+        
+        int j=0,length_sy=0;//符号表的长度
+        length_sy=strlen(sym);
+        char s1[30];//保存单词
+        
+        if(isalpha(ch))
+        {
+            s1[j++]=ch;
+            ch=fgetc(fp);
+            ch_N++;
+            while(isalpha(ch))
+            {
+                s1[j]=ch;
+                j++;
+                ch=fgetc(fp);
+                ch_N++;
+            }
+            word_N++;
+        }//是字母型的单词
+        if(isdigit(ch))
+        {
+            s1[j++]=ch;
+            ch=fgetc(fp);
+            ch_N++;
+            while(isdigit(ch))
+            {
+                s1[j]=ch;
+                j++;
+                ch=fgetc(fp);
+                ch_N++;
+            }
+            word_N++;
+        }
+        if(ch=='\n')
+        {
+            line_N++;
+        }//行数
+        while(length_sy--)
+        {
+            if(ch==sym[length_sy])
+            {
+                word_N++;
+            }
+        }//符号表的单词
+    }
+    if(a!=0)
+        printf("字符数：%d\n",ch_N);
+    if(b!=0)
+        printf("单词数：%d\n",word_N);
+    if(c!=0)
+        printf("总行数：%d\n",line_N+1);
+}
