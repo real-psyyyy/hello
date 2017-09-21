@@ -50,7 +50,7 @@ void DealFenshu(int m, int a[][2])
             }
             else
             {
-                cout<<‘\t‘;
+                cout<<'\t';
             }
     }
 
@@ -64,7 +64,7 @@ void DisplayFenshu(int a[][2],int w,int m)
             if(a[q][0]==0)
                 cout<<"0"<<‘\t‘;
             else
-                cout<<a[q][0]<<"/"<<a[q][1]<<‘\t‘;
+                cout<<a[q][0]<<"/"<<a[q][1]<<'\t';
             if(q%5==4)
             {
                 cout<<endl;
@@ -116,7 +116,7 @@ void DealInt(int m,int a[])
         }
         else
         {
-            cout<<‘\t‘;
+            cout<<'\t';
         }
     }
 }
@@ -126,7 +126,7 @@ void DisplayInt(int a[],int w,int m)
     {
         for(int q=0;q<m;q++)
         {
-            cout<<a[q]<<‘\t‘;
+            cout<<a[q]<<'\t';
             if(q%5==4)
             {
                 cout<<endl;
