@@ -1,0 +1,94 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include <io.h>
+#include <string.h>
+//基本功能
+ void Foundation(FILE *fp1)
+ {
+      int chars,lines,words,spaces,state;
+      chars=words=state=spaces=0;   
+      lines=0;
+      char c;   
+     while(( c=fgetc(fp1))!=EOF)   //判断读入的字符是否为EOF
+	{
+         fputc(c,stdout);
+         chars++;
+         if(c=='\n')
+		{
+             state=0;
+             lines++;
+       }
+	   if(c==' ')
+		{
+             state=0;
+             spaces++;
+       }
+	   else
+	{
+         if((state==0)&&(c!='\n'))
+		{
+              state=1;
+              words++;
+       }
+     }
+   }    
+	 printf("\n%d %d %d %d\n",words,lines,chars,spaces);
+ }
+  
+
+//扩展功能
+int Nulines=0,Colines=0,Zhulines=0,sum=0,sum1=0;
+void Extend(FILE *fp1,int sum)
+{
+     char c;
+     while((  c=fgetc(fp1))!=EOF)
+	 {
+         if(c!='\n')
+		 {
+             if(c!=' ')
+			 {
+                 sum++;
+             }
+			 if(c=='/'||c=='*')
+			 {
+                 sum1++;
+             }
+         }
+		 else
+		 {
+             if(sum<=1)
+			 {
+                 Nulines++;sum=0;
+             }
+             if(sum>=2&&sum1==0)
+			 {
+                 Colines++;
+             }if(sum1==2)
+			 {
+                 Zhulines++;
+                 sum1=0;
+             }
+        }    
+    }
+     printf("%d %d %d\n", Nulines,Colines,Zhulines);
+}
+ 
+
+ void main()
+ {
+     FILE *fp1;
+     fp1=fopen("e:\\VC++\\wc1\\wc1.txt","r");
+     printf("请输入c,a \n");
+     char c;
+     scanf("%c",&c);
+     if(c=='c')
+	 {
+        Foundation(fp1);    
+     }
+	 if(c=='a')
+	 {
+         Extend(fp1,sum);    
+     }
+     fclose(fp1);
+ 
+ }
